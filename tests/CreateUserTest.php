@@ -23,13 +23,11 @@ class CreateUserTest extends TestCase
 
         $this->seeStatusCode(201);
         $this->seeJsonStructure([
-            'data' => [
-                'id',
-                'name',
-                'email',
-                'created_at',
-                'updated_at',
-            ],
+            'id',
+            'name',
+            'email',
+            'created_at',
+            'updated_at',
         ]);
     }
 }
