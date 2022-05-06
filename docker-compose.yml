@@ -1,0 +1,69 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: imobiliaria
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: nlwvaloriza-lumen
+    container_name: nlwvaloriza-lumen-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - nlwvaloriza-lumen
+
+  db:
+    image: mysql
+    container_name: nlwvaloriza-lumen-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: nlwvaloriza
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      - db-data:/var/lib/mysql # Volume de dados do container
+    networks:
+      - nlwvaloriza-lumen
+
+  nginx:
+    image: nginx:alpine
+    container_name: nlwvaloriza-lumen-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - nlwvaloriza-lumen
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: nlwvaloriza-lumen-pma
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=${DB_PASSWORD}
+    networks:
+      - nlwvaloriza-lumen
+
+volumes:
+  db-data:
+
+networks:
+  nlwvaloriza-lumen:
+    driver: bridge
