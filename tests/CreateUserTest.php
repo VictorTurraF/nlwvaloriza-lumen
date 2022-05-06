@@ -5,13 +5,6 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class CreateUserTest extends TestCase
 {
-    private $createUserRequestBody = [
-        'name' => 'John Doe',
-        'email' => '',
-        'password' => '',
-        'password_confirmation' => '',
-    ];
-
     /**
      * A basic test example.
      *
@@ -19,7 +12,17 @@ class CreateUserTest extends TestCase
      */
     public function testShouldCreateAnUser()
     {
-        $this->post('/users', $this->createUserRequestBody);
+        $faker = Faker\Factory::create();
+
+        $password = $faker->password();
+        $requestBody = [
+            'name' => $faker->name(),
+            'email' => $faker->email(),
+            'password' => $password,
+            'password_confirmation' => $password,
+        ];
+
+        $this->post('/users', $requestBody);
 
         $this->seeStatusCode(201);
         $this->seeJsonStructure([
