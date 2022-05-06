@@ -26,6 +26,21 @@ class CreateUserTest extends TestCase
         ]);
     }
 
+    public function testShouldReturnErrorWhenPasswordConfirmationIsNotEqualToPassword()
+    {
+        $requestBody = $this->generateUserRequestBody();
+        $requestBody['password_confirmation'] = 'wrong_password';
+
+        $this->post('/users', $requestBody);
+
+        $this->seeStatusCode(422);
+        $this->seeJson([
+            'password' => [
+                'The password confirmation does not match.'
+            ]
+        ]);
+    }
+
     private function generateUserRequestBody()
     {
         $faker = Faker\Factory::create();
