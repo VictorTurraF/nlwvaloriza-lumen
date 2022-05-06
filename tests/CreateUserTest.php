@@ -12,15 +12,7 @@ class CreateUserTest extends TestCase
      */
     public function testShouldCreateAnUser()
     {
-        $faker = Faker\Factory::create();
-
-        $password = $faker->password();
-        $requestBody = [
-            'name' => $faker->name(),
-            'email' => $faker->email(),
-            'password' => $password,
-            'password_confirmation' => $password,
-        ];
+        $requestBody = $this->generateUserRequestBody();
 
         $this->post('/users', $requestBody);
 
@@ -32,5 +24,20 @@ class CreateUserTest extends TestCase
             'created_at',
             'updated_at',
         ]);
+    }
+
+    private function generateUserRequestBody()
+    {
+        $faker = Faker\Factory::create();
+
+        $password = $faker->password();
+        $requestBody = [
+            'name' => $faker->name(),
+            'email' => $faker->email(),
+            'password' => $password,
+            'password_confirmation' => $password,
+        ];
+
+        return $requestBody;
     }
 }
