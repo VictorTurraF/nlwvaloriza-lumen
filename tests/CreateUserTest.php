@@ -41,6 +41,21 @@ class CreateUserTest extends TestCase
         ]);
     }
 
+    public function testShouldRequireEmail() {
+        $requestBody = $this->generateUserRequestBody();
+        $requestBody['email'] = '';
+
+        $this->post('/users', $requestBody);
+
+        $this->seeStatusCode(422);
+        $this->seeJson([
+            'email' => [
+                'The email field is required.'
+            ]
+        ]);
+    }
+
+
     private function generateUserRequestBody()
     {
         $faker = Faker\Factory::create();
