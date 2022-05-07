@@ -17,7 +17,7 @@ class AuthenticateUserTest extends TestCase
 
         $this->post('/auth/login', [
             'email' => $user->email,
-            'password' => 'secret',
+            'password' => $user->password,
         ]);
 
         $this->seeStatusCode(200);
