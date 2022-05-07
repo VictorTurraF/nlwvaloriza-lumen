@@ -24,7 +24,7 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: nlwvaloriza
+      MYSQL_USER: default
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     ports:
@@ -57,7 +57,7 @@ services:
       - PMA_HOST=db
       - PMA_PORT=3306
       - PMA_USER=root
-      - PMA_PASSWORD=${DB_PASSWORD}
+      - PMA_PASSWORD=nlwvaloriza
     networks:
       - nlwvaloriza-lumen
 
