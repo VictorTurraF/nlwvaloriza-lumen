@@ -55,6 +55,20 @@ class CreateUserTest extends TestCase
         ]);
     }
 
+    public function testShouldRequireName() {
+        $requestBody = $this->generateUserRequestBody();
+        $requestBody['name'] = '';
+
+        $this->post('/users', $requestBody);
+
+        $this->seeStatusCode(422);
+        $this->seeJson([
+            'name' => [
+                'The name field is required.'
+            ]
+        ]);
+    }
+
 
     private function generateUserRequestBody()
     {
