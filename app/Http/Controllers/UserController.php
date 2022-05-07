@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,6 +15,8 @@ class UserController extends Controller
 
         $user = $request->all();
 
-        return response()->json($user, 201);
+        $craetedUser = User::create($user);
+
+        return response()->json($craetedUser, 201);
     }
 }
