@@ -42,6 +42,7 @@
             "vendor/bin/phpunit"
         ],
         "test:watch": [
+            "Composer\\Config::disableProcessTimeout",
             "vendor/bin/phpunit-watcher watch"
         ]
     }
