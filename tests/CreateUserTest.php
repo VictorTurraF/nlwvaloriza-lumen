@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
@@ -65,6 +66,22 @@ class CreateUserTest extends TestCase
         $this->seeJson([
             'name' => [
                 'The name field is required.'
+            ]
+        ]);
+    }
+
+    public function testShouldNotCreateIfEmailIsAlreadyRegistered() {
+        $user = User::factory()->create();
+
+        $requestBody = $this->generateUserRequestBody();
+        $requestBody['email'] = $user->email;
+
+        $this->post('/users', $requestBody);
+
+        $this->seeStatusCode(422);
+        $this->seeJson([
+            'email' => [
+                'The email has already been taken.'
             ]
         ]);
     }
