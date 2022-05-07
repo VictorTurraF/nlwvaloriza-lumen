@@ -18,6 +18,12 @@ class AuthController extends Controller
             ], 400);
         }
 
+        if ($foundUser->password != $credentials['password']) {
+            return response()->json([
+                'message' => 'These credentials do not match our records.'
+            ], 400);
+        }
+
         return response()->json([
             'token' => '',
             'user' => $foundUser,
