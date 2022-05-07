@@ -39,4 +39,19 @@ class AuthenticateUserTest extends TestCase
             'message' => 'These credentials do not match our records.'
         ]);
     }
+
+    public function testShouldReturnErrorWhenPasswordIsNotCorrect()
+    {
+        $user = User::factory()->create();
+
+        $this->post('/auth/login', [
+            'email' => $user->email,
+            'password' => 'wrong_password',
+        ]);
+
+        $this->seeStatusCode(400);
+        $this->seeJson([
+            'message' => 'These credentials do not match our records.'
+        ]);
+    }
 }
