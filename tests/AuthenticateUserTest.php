@@ -26,4 +26,17 @@ class AuthenticateUserTest extends TestCase
             'user'
         ]);
     }
+
+    public function testShouldReturnErrorWhenEmailIsNotFound()
+    {
+        $this->post('/auth/login', [
+            'email' => 'any@email.com',
+            'password' => 'secret',
+        ]);
+
+        $this->seeStatusCode(400);
+        $this->seeJson([
+            'message' => 'These credentials do not match our records.'
+        ]);
+    }
 }
