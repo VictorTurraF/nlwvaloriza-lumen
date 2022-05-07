@@ -12,6 +12,12 @@ class AuthController extends Controller
 
         $foundUser = User::where('email', $credentials['email'])->first();
 
+        if (!$foundUser) {
+            return response()->json([
+                'message' => 'These credentials do not match our records.'
+            ], 400);
+        }
+
         return response()->json([
             'token' => '',
             'user' => $foundUser,
