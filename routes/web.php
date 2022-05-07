@@ -21,3 +21,8 @@ $router->post('/users', [
     'as' => 'users.create',
     'uses' => 'UserController@create'
 ]);
+
+$router->post('/auth/login', [
+    'as' => 'auth.login',
+    'uses' => 'AuthController@login'
+]);
