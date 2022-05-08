@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -17,7 +18,11 @@ class UserController extends Controller
 
         $user = $request->all();
 
-        $craetedUser = User::create($user);
+        $craetedUser = User::create([
+            'name' => $user['name'],
+            'email' => $user['email'],
+            'password' => (new BcryptHasher)->make($user['password']),
+        ]);
 
         return response()->json($craetedUser, 201);
     }

@@ -22,7 +22,9 @@ $router->post('/users', [
     'uses' => 'UserController@create'
 ]);
 
-$router->post('/auth/login', [
-    'as' => 'auth.login',
-    'uses' => 'AuthController@login'
-]);
+$router->group([
+    'prefix' => 'auth'
+], function ($router) {
+    $router->post('login', 'AuthController@login');
+});
+
