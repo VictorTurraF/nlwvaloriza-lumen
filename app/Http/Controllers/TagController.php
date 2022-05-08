@@ -21,7 +21,8 @@ class TagController extends Controller
     public function create(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:tags,name'
+            'name' => 'required|unique:tags,name',
+            'color' => 'required'
         ]);
 
         $fields = $request->only([
