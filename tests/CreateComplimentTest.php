@@ -24,11 +24,12 @@ class CreateComplimentTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create();
+        $receiverUser = User::factory()->create();
 
         $this->actingAs($user)
             ->post('/api/compliments', [
                 'message' => 'You are awesome!',
-                'receiver_user_id' => 1
+                'receiver_user_id' => $receiverUser->id
             ])
             ->seeStatusCode(201)
             ->seeJsonStructure([
@@ -49,6 +50,26 @@ class CreateComplimentTest extends TestCase
             ->post('/api/compliments', [
                 'message' => 'You are awesome!',
                 'receiver_user_id' => 'invalid'
+            ])
+            ->seeStatusCode(422)
+            ->seeJson([
+                'receiver_user_id' => [
+                    'The selected receiver user id is invalid.'
+                ]
+            ]);
+    }
+
+    public function testShouldReturnErrorIfReceiverUserIdIsNotExisting()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        User::destroy(10);
+
+        $this->actingAs($user)
+            ->post('/api/compliments', [
+                'message' => 'You are awesome!',
+                'receiver_user_id' => 10
             ])
             ->seeStatusCode(422)
             ->seeJson([
