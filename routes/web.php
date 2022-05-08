@@ -28,3 +28,12 @@ $router->group([
     $router->post('login', 'AuthController@login');
 });
 
+$router->group([
+    'prefix' => 'api',
+    'middleware' => 'auth'
+], function ($router) {
+    $router->post('tags', [
+        'as' => 'tags.create',
+        'uses' => 'TagController@create'
+    ]);
+});
