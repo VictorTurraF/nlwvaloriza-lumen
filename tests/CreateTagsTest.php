@@ -25,10 +25,7 @@ class CreateTagsTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
 
-        $requestBody = [
-            'name' => 'New Tag',
-            'color' => '#000000'
-        ];
+        $requestBody = $this->generateTagRequestBody();
 
         $this->actingAs($user)
             ->post('/api/tags', $requestBody)
@@ -42,5 +39,15 @@ class CreateTagsTest extends TestCase
                 'updated_at'
             ])
             ->seeJson($requestBody);
+    }
+
+    private function generateTagRequestBody()
+    {
+        $faker = Faker\Factory::create();
+
+        return [
+            'name' => $faker->slug(2),
+            'color' => $faker->hexColor()
+        ];
     }
 }
