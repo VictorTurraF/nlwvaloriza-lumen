@@ -25,6 +25,12 @@ class ComplimentController extends Controller
             'receiver_user_id',
         ]);
 
+        if (Auth::user()->id === $fields['receiver_user_id']) {
+            return response()->json([
+                'message' => 'You cannot send a compliment to yourself.',
+            ], 400);
+        }
+
         $fields['sender_user_id'] = Auth::user()->id;
 
         $compliment = Compliment::create($fields);
