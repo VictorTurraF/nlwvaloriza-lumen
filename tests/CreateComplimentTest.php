@@ -98,7 +98,8 @@ class CreateComplimentTest extends TestCase
             ]);
     }
 
-    public function testShouldNotCreateIsSenderAndReceiverAreTheSame() {
+    public function testShouldNotCreateIsSenderAndReceiverAreTheSame()
+    {
         /** @var User $user */
         $user = User::factory()->create();
 
@@ -109,9 +110,7 @@ class CreateComplimentTest extends TestCase
             ])
             ->seeStatusCode(400)
             ->seeJson([
-                'message' => [
-                    'You cannot send a compliment to yourself.'
-                ]
+                'message' => 'You cannot send a compliment to yourself.'
             ]);
     }
 }
