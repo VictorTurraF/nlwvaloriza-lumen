@@ -8,13 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ComplimentController extends Controller
 {
-    // Require authentication
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    // Creates new compliment
     public function create(Request $request)
     {
         $fields = $request->only([
