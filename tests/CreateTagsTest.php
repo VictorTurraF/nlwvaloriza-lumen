@@ -25,13 +25,22 @@ class CreateTagsTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
 
+        $requestBody = [
+            'name' => 'New Tag',
+            'color' => '#000000'
+        ];
+
         $this->actingAs($user)
-            ->post('/api/tags', [
-                'name' => 'New Tag'
-            ])
+            ->post('/api/tags', $requestBody)
             ->seeStatusCode(201)
-            ->seeJson([
-                'name' => 'New Tag'
-            ]);
+            ->seeJsonStructure([
+                'id',
+                'name',
+                'color',
+                'hashtag',
+                'created_at',
+                'updated_at'
+            ])
+            ->seeJson($requestBody);
     }
 }
