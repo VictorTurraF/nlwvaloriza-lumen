@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tag;
 use App\Models\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
@@ -58,6 +59,26 @@ class CreateTagsTest extends TestCase
                 ]
             ]);
     }
+
+    public function testShouldReturnErrorWhenTagNameIsNotUnique()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $tag = Tag::factory()->create();
+
+        $this->actingAs($user)
+            ->post('/api/tags', [
+                'name' => $tag->name,
+                'color' => $tag->color
+            ])
+            ->seeStatusCode(422)
+            ->seeJson([
+                'name' => [
+                    'The name has already been taken.'
+                ]
+            ]);
+    }
+
 
     private function generateTagRequestBody()
     {
