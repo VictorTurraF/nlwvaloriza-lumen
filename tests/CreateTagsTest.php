@@ -79,6 +79,23 @@ class CreateTagsTest extends TestCase
             ]);
     }
 
+    public function testShouldReturnErrorWhenTagColorIsNotProvided() {
+
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $requestBody = $this->generateTagRequestBody();
+        $requestBody['color'] = '';
+
+        $this->actingAs($user)
+            ->post('/api/tags', $requestBody)
+            ->seeStatusCode(422)
+            ->seeJson([
+                'color' => [
+                    'The color field is required.'
+                ]
+            ]);
+    }
 
     private function generateTagRequestBody()
     {
