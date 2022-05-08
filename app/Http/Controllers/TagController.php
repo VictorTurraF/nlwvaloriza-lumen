@@ -12,6 +12,12 @@ class TagController extends Controller
         $this->middleware('auth');
     }
 
+    public function index() {
+        $tags = Tag::all();
+
+        return response()->json($tags);
+    }
+
     public function create(Request $request)
     {
         $this->validate($request, [

@@ -32,8 +32,19 @@ $router->group([
     'prefix' => 'api',
     'middleware' => 'auth'
 ], function ($router) {
-    $router->post('tags', [
-        'as' => 'tags.create',
-        'uses' => 'TagController@create'
-    ]);
+
+    $router->group([
+        'prefix' => 'tags'
+    ], function ($router) {
+
+        $router->get('/', [
+            'as' => 'tags.index',
+            'uses' => 'TagController@index'
+        ]);
+
+        $router->post('/', [
+            'as' => 'tags.create',
+            'uses' => 'TagController@create'
+        ]);
+    });
 });
