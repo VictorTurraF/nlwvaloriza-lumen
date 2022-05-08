@@ -97,4 +97,21 @@ class CreateComplimentTest extends TestCase
                 ]
             ]);
     }
+
+    public function testShouldNotCreateIsSenderAndReceiverAreTheSame() {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->post('/api/compliments', [
+                'message' => 'You are awesome!',
+                'receiver_user_id' => $user->id
+            ])
+            ->seeStatusCode(400)
+            ->seeJson([
+                'message' => [
+                    'You cannot send a compliment to yourself.'
+                ]
+            ]);
+    }
 }
