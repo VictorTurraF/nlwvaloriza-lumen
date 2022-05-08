@@ -13,6 +13,13 @@ class ComplimentController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        $compliments = Compliment::all();
+
+        return response()->json($compliments);
+    }
+
     public function create(Request $request)
     {
         $this->validate($request, [
