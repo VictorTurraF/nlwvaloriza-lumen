@@ -13,6 +13,8 @@ class TagController extends Controller
 
     public function create()
     {
-        return response()->json([]);
+        return response()->json([
+            'name' => 'New Tag'
+        ], 201);
     }
 }
