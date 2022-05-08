@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tag;
 use App\Models\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
@@ -111,6 +112,29 @@ class CreateComplimentTest extends TestCase
             ->seeStatusCode(400)
             ->seeJson([
                 'message' => 'You cannot send a compliment to yourself.'
+            ]);
+    }
+
+    public function testShouldCanAttachManyTagsToACompliment() {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $receiverUser = User::factory()->create();
+        $tagIds = Tag::factory()->count(2)->create()->pluck('id')->toArray();
+
+        $this->actingAs($user)
+            ->post('/api/compliments', [
+                'message' => 'You are awesome!',
+                'receiver_user_id' => $receiverUser->id,
+                'tags' => $tagIds
+            ])
+            ->seeStatusCode(201)
+            ->seeJsonStructure([
+                'id',
+                'message',
+                'receiver_user_id',
+                'created_at',
+                'updated_at',
+                'tags',
             ]);
     }
 }
