@@ -14,11 +14,16 @@ class Compliment extends Model
 
     public function sender()
     {
-        return $this->belongsTo(User::class, 'sender_user_id');
+        return $this->hasOne(User::class, 'sender_user_id');
     }
 
     public function receiver()
     {
-        return $this->belongsTo(User::class, 'receiver_user_id');
+        return $this->hasOne(User::class, 'receiver_user_id');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

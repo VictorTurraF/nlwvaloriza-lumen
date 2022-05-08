@@ -22,7 +22,7 @@ class ComplimentController extends Controller
 
         $fields = $request->only([
             'message',
-            'receiver_user_id',
+            'receiver_user_id'
         ]);
 
         if (Auth::user()->id === $fields['receiver_user_id']) {
@@ -34,6 +34,9 @@ class ComplimentController extends Controller
         $fields['sender_user_id'] = Auth::user()->id;
 
         $compliment = Compliment::create($fields);
+        $compliment->tags()->attach($request->input('tags', []));
+
+        $compliment['tags'] = $compliment->tags;
 
         return response()->json($compliment, 201);
     }
