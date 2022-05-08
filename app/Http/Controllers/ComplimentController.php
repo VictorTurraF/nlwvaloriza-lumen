@@ -15,6 +15,10 @@ class ComplimentController extends Controller
 
     public function create(Request $request)
     {
+        $this->validate($request, [
+            'receiver_user_id' => 'required|exists:users,id',
+        ]);
+
         $fields = $request->only([
             'message',
             'receiver_user_id',
