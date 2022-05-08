@@ -47,4 +47,13 @@ $router->group([
             'uses' => 'TagController@create'
         ]);
     });
+
+    $router->group([
+        'prefix' => 'compliments'
+    ], function ($router) {
+        $router->post('/', [
+            'as' => 'compliments.create',
+            'uses' => 'ComplimentController@create'
+        ]);
+    });
 });
