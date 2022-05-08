@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Compliment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComplimentController extends Controller
 {
@@ -15,12 +17,14 @@ class ComplimentController extends Controller
     // Creates new compliment
     public function create(Request $request)
     {
-        $compliment = $request->all();
+        $fields = $request->only([
+            'message',
+            'receiver_user_id',
+        ]);
 
-        $compliment['id'] = 1;
-        $compliment['created_at'] = '';
-        $compliment['updated_at'] = '';
+        $fields['sender_user_id'] = Auth::user()->id;
 
+        $compliment = Compliment::create($fields);
 
         return response()->json($compliment, 201);
     }
