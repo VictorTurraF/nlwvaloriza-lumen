@@ -129,12 +129,12 @@ class CreateComplimentTest extends TestCase
             ])
             ->seeStatusCode(201)
             ->seeJsonStructure([
-                'id',
-                'message',
-                'receiver_user_id',
-                'created_at',
-                'updated_at',
-                'tags',
+                'tags' => [
+                    '*' => [
+                        'name',
+                        'hashtag',
+                    ]
+                ],
             ]);
     }
 }
