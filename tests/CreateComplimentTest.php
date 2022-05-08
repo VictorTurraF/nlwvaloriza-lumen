@@ -39,4 +39,22 @@ class CreateComplimentTest extends TestCase
                 'updated_at',
             ]);
     }
+
+    public function testShouldReturnErrorIfReceiverUserIdIsNotValid()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->post('/api/compliments', [
+                'message' => 'You are awesome!',
+                'receiver_user_id' => 'invalid'
+            ])
+            ->seeStatusCode(422)
+            ->seeJson([
+                'receiver_user_id' => [
+                    'The selected receiver user id is invalid.'
+                ]
+            ]);
+    }
 }
