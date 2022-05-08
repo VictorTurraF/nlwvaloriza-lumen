@@ -78,4 +78,23 @@ class CreateComplimentTest extends TestCase
                 ]
             ]);
     }
+
+    public function testShouldReturnErrorIfMessageIsEmpty()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $receiverUser = User::factory()->create();
+
+        $this->actingAs($user)
+            ->post('/api/compliments', [
+                'message' => '',
+                'receiver_user_id' => $receiverUser->id
+            ])
+            ->seeStatusCode(422)
+            ->seeJson([
+                'message' => [
+                    'The message field is required.'
+                ]
+            ]);
+    }
 }
