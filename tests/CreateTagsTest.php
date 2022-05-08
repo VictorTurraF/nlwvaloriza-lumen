@@ -41,6 +41,24 @@ class CreateTagsTest extends TestCase
             ->seeJson($requestBody);
     }
 
+    public function testShouldReturnErrorWhenTagNameIsNotProvided()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $requestBody = $this->generateTagRequestBody();
+        $requestBody['name'] = '';
+
+        $this->actingAs($user)
+            ->post('/api/tags', $requestBody)
+            ->seeStatusCode(422)
+            ->seeJson([
+                'name' => [
+                    'The name field is required.'
+                ]
+            ]);
+    }
+
     private function generateTagRequestBody()
     {
         $faker = Faker\Factory::create();
