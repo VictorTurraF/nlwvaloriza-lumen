@@ -54,4 +54,11 @@ class ComplimentController extends Controller
 
         return response()->json($compliments);
     }
+
+    public function sent()
+    {
+        $compliments = Compliment::where('sender_user_id', Auth::user()->id)->get();
+
+        return response()->json($compliments);
+    }
 }
