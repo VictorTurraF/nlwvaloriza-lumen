@@ -6,6 +6,15 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class AuthenticateUserTest extends TestCase
 {
+    private User $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+    }
+
     /**
      * A basic test example.
      *
@@ -13,10 +22,9 @@ class AuthenticateUserTest extends TestCase
      */
     public function testShouldAuthenticateAnUser()
     {
-        $user = User::factory()->create();
 
         $this->post('/auth/login', [
-            'email' => $user->email,
+            'email' => $this->user->email,
             'password' => 'password',
         ]);
 
@@ -42,10 +50,8 @@ class AuthenticateUserTest extends TestCase
 
     public function testShouldReturnErrorWhenPasswordIsNotCorrect()
     {
-        $user = User::factory()->create();
-
         $this->post('/auth/login', [
-            'email' => $user->email,
+            'email' => $this->user->email,
             'password' => 'wrong_password',
         ]);
 
