@@ -12,4 +12,3 @@ O metodo de autenticação utilizado foi *Stateless Authentication* utilizando J
 - [ ] Separar a lógica da aplicação em camadas (Controller, Service, Repository);
 - [ ] Adicionar testes de unidades;
 - [ ] Fazer deploy automatizado em produção.
-
