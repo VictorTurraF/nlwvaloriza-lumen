@@ -65,5 +65,10 @@ $router->group([
             'as' => 'compliments.received',
             'uses' => 'ComplimentController@received'
         ]);
+
+        $router->get('/sent', [
+            'as' => 'compliments.sent',
+            'uses' => 'ComplimentController@sent'
+        ]);
     });
 });
