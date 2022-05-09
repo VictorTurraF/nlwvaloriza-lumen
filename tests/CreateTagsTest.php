@@ -5,11 +5,15 @@ use App\Models\User;
 
 class CreateTagsTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
+    private User $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+    }
+
     public function testShouldRequireUserAuthentication()
     {
         $this->json('POST', '/api/tags')
@@ -21,12 +25,10 @@ class CreateTagsTest extends TestCase
 
     public function testShouldCreatesNewTag()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
 
         $requestBody = $this->generateTagRequestBody();
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/tags', $requestBody)
             ->seeStatusCode(201)
             ->seeJsonStructure([
@@ -42,13 +44,11 @@ class CreateTagsTest extends TestCase
 
     public function testShouldReturnErrorWhenTagNameIsNotProvided()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
 
         $requestBody = $this->generateTagRequestBody();
         $requestBody['name'] = '';
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/tags', $requestBody)
             ->seeStatusCode(422)
             ->seeJson([
@@ -60,11 +60,9 @@ class CreateTagsTest extends TestCase
 
     public function testShouldReturnErrorWhenTagNameIsNotUnique()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
         $tag = Tag::factory()->create();
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/tags', [
                 'name' => $tag->name,
                 'color' => $tag->color
@@ -79,13 +77,11 @@ class CreateTagsTest extends TestCase
 
     public function testShouldReturnErrorWhenTagColorIsNotProvided() {
 
-        /** @var User $user */
-        $user = User::factory()->create();
 
         $requestBody = $this->generateTagRequestBody();
         $requestBody['color'] = '';
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/tags', $requestBody)
             ->seeStatusCode(422)
             ->seeJson([
