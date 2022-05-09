@@ -90,13 +90,11 @@ class CreateUserTest extends TestCase
         $faker = Faker\Factory::create();
 
         $password = $faker->password();
-        $requestBody = [
+        return [
             'name' => $faker->name(),
             'email' => $faker->email(),
             'password' => $password,
             'password_confirmation' => $password,
         ];
-
-        return $requestBody;
     }
 }

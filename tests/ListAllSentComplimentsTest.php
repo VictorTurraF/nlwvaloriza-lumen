@@ -14,11 +14,6 @@ class ListAllSentComplimentsTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function testShouldRequiresAuthentication()
     {
         $this->get('/api/compliments/sent')
