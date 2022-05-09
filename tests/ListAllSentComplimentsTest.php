@@ -1,10 +1,19 @@
 <?php
 
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
+use App\Models\Compliment;
+use App\Models\User;
 
 class ListAllSentComplimentsTest extends TestCase
 {
+    private User $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+    }
+
     /**
      * A basic test example.
      *
@@ -17,5 +26,17 @@ class ListAllSentComplimentsTest extends TestCase
             ->seeJson([
                 'message' => 'Unauthenticated.'
             ]);
+    }
+
+    public function testShouldReturnAllSentCompliments()
+    {
+        $compliment = Compliment::factory()->create([
+            'sender_user_id' => $this->user->id,
+        ]);
+
+        $this->actingAs($this->user)
+            ->get('/api/compliments/sent')
+            ->seeStatusCode(200)
+            ->seeJson($compliment->toArray());
     }
 }
