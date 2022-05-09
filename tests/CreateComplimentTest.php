@@ -113,7 +113,8 @@ class CreateComplimentTest extends TestCase
             ]);
     }
 
-    public function testShouldCanAttachManyTagsToACompliment() {
+    public function testShouldCanAttachManyTagsToACompliment()
+    {
         $tagIds = $this->tags->pluck('id')->toArray();
 
         $this->actingAs($this->user)
@@ -125,7 +126,7 @@ class CreateComplimentTest extends TestCase
             ->seeStatusCode(201)
             ->seeJsonStructure([
                 'tags' => [
-                    '*' => [
+                    [
                         'name',
                         'hashtag',
                     ]
