@@ -23,7 +23,7 @@ class AuthenticateUserTest extends TestCase
     public function testShouldAuthenticateAnUser()
     {
 
-        $this->post('/auth/login', [
+        $this->post(route('auth'), [
             'email' => $this->user->email,
             'password' => 'password',
         ]);
@@ -37,7 +37,7 @@ class AuthenticateUserTest extends TestCase
 
     public function testShouldReturnErrorWhenEmailIsNotFound()
     {
-        $this->post('/auth/login', [
+        $this->post(route('auth'), [
             'email' => 'any@email.com',
             'password' => 'secret',
         ]);
@@ -50,7 +50,7 @@ class AuthenticateUserTest extends TestCase
 
     public function testShouldReturnErrorWhenPasswordIsNotCorrect()
     {
-        $this->post('/auth/login', [
+        $this->post(route('auth'), [
             'email' => $this->user->email,
             'password' => 'wrong_password',
         ]);

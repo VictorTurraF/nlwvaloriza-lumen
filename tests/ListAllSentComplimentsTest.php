@@ -16,7 +16,7 @@ class ListAllSentComplimentsTest extends TestCase
 
     public function testShouldRequiresAuthentication()
     {
-        $this->get('/api/compliments/sent')
+        $this->get(route('compliments.sent'))
             ->seeStatusCode(401)
             ->seeJson([
                 'message' => 'Unauthenticated.'
@@ -30,7 +30,7 @@ class ListAllSentComplimentsTest extends TestCase
         ]);
 
         $this->actingAs($this->user)
-            ->get('/api/compliments/sent')
+            ->get(route('compliments.sent'))
             ->seeStatusCode(200)
             ->seeJson($compliment->toArray());
     }

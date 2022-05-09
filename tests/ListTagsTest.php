@@ -12,7 +12,7 @@ class ListTagsTest extends TestCase
      */
     public function testShouldRequireUsersAuthentication()
     {
-        $this->json('GET', '/api/tags')
+        $this->get(route('tags.index'))
             ->seeStatusCode(401)
             ->seeJson([
                 'message' => 'Unauthenticated.'
@@ -26,7 +26,7 @@ class ListTagsTest extends TestCase
         $tag = Tag::factory()->create();
 
         $this->actingAs($user)
-            ->get('/api/tags')
+            ->get(route('tags.index'))
             ->seeStatusCode(200)
             ->seeJson($tag->toArray());
     }

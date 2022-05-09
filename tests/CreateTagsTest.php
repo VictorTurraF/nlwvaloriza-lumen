@@ -16,7 +16,7 @@ class CreateTagsTest extends TestCase
 
     public function testShouldRequireUserAuthentication()
     {
-        $this->json('POST', '/api/tags')
+        $this->post(route('tags.create'))
             ->seeStatusCode(401)
             ->seeJson([
                 'message' => 'Unauthenticated.'
@@ -29,7 +29,7 @@ class CreateTagsTest extends TestCase
         $requestBody = $this->generateTagRequestBody();
 
         $this->actingAs($this->user)
-            ->post('/api/tags', $requestBody)
+            ->post(route('tags.create'), $requestBody)
             ->seeStatusCode(201)
             ->seeJsonStructure([
                 'id',
@@ -49,7 +49,7 @@ class CreateTagsTest extends TestCase
         $requestBody['name'] = '';
 
         $this->actingAs($this->user)
-            ->post('/api/tags', $requestBody)
+            ->post(route('tags.create'), $requestBody)
             ->seeStatusCode(422)
             ->seeJson([
                 'name' => [
@@ -63,7 +63,7 @@ class CreateTagsTest extends TestCase
         $tag = Tag::factory()->create();
 
         $this->actingAs($this->user)
-            ->post('/api/tags', [
+            ->post(route('tags.create'), [
                 'name' => $tag->name,
                 'color' => $tag->color
             ])
@@ -82,7 +82,7 @@ class CreateTagsTest extends TestCase
         $requestBody['color'] = '';
 
         $this->actingAs($this->user)
-            ->post('/api/tags', $requestBody)
+            ->post(route('tags.create'), $requestBody)
             ->seeStatusCode(422)
             ->seeJson([
                 'color' => [

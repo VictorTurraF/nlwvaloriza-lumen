@@ -25,7 +25,10 @@ $router->post('/users', [
 $router->group([
     'prefix' => 'auth'
 ], function ($router) {
-    $router->post('login', 'AuthController@login');
+    $router->post('login', [
+        'as' => 'auth',
+        'uses' => 'AuthController@login'
+    ]);
 });
 
 $router->group([

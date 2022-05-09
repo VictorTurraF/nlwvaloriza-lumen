@@ -13,7 +13,7 @@ class CreateUserTest extends TestCase
     {
         $requestBody = $this->generateUserRequestBody();
 
-        $this->post('/users', $requestBody);
+        $this->post(route('users.create'), $requestBody);
 
         $this->seeStatusCode(201);
         $this->seeJsonStructure([
@@ -30,7 +30,7 @@ class CreateUserTest extends TestCase
         $requestBody = $this->generateUserRequestBody();
         $requestBody['password_confirmation'] = 'wrong_password';
 
-        $this->post('/users', $requestBody);
+        $this->post(route('users.create'), $requestBody);
 
         $this->seeStatusCode(422);
         $this->seeJson([
@@ -44,7 +44,7 @@ class CreateUserTest extends TestCase
         $requestBody = $this->generateUserRequestBody();
         $requestBody['email'] = '';
 
-        $this->post('/users', $requestBody);
+        $this->post(route('users.create'), $requestBody);
 
         $this->seeStatusCode(422);
         $this->seeJson([
@@ -58,7 +58,7 @@ class CreateUserTest extends TestCase
         $requestBody = $this->generateUserRequestBody();
         $requestBody['name'] = '';
 
-        $this->post('/users', $requestBody);
+        $this->post(route('users.create'), $requestBody);
 
         $this->seeStatusCode(422);
         $this->seeJson([
@@ -74,7 +74,7 @@ class CreateUserTest extends TestCase
         $requestBody = $this->generateUserRequestBody();
         $requestBody['email'] = $user->email;
 
-        $this->post('/users', $requestBody);
+        $this->post(route('users.create'), $requestBody);
 
         $this->seeStatusCode(422);
         $this->seeJson([

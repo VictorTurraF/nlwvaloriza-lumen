@@ -26,7 +26,7 @@ class CreateComplimentTest extends TestCase
      */
     public function testShouldRequiresAuthentication()
     {
-        $this->post('/api/compliments')
+        $this->post(route('compliments.create'))
             ->seeStatusCode(401)
             ->seeJson([
                 'message' => 'Unauthenticated.'
@@ -37,7 +37,7 @@ class CreateComplimentTest extends TestCase
     {
 
         $this->actingAs($this->user)
-            ->post('/api/compliments', [
+            ->post(route('compliments.create'), [
                 'message' => 'You are awesome!',
                 'receiver_user_id' => $this->receiverUser->id
             ])
@@ -55,7 +55,7 @@ class CreateComplimentTest extends TestCase
     {
 
         $this->actingAs($this->user)
-            ->post('/api/compliments', [
+            ->post(route('compliments.create'), [
                 'message' => 'You are awesome!',
                 'receiver_user_id' => 'invalid'
             ])
@@ -72,7 +72,7 @@ class CreateComplimentTest extends TestCase
         User::destroy(10);
 
         $this->actingAs($this->user)
-            ->post('/api/compliments', [
+            ->post(route('compliments.create'), [
                 'message' => 'You are awesome!',
                 'receiver_user_id' => 10
             ])
@@ -87,7 +87,7 @@ class CreateComplimentTest extends TestCase
     public function testShouldReturnErrorIfMessageIsEmpty()
     {
         $this->actingAs($this->user)
-            ->post('/api/compliments', [
+            ->post(route('compliments.create'), [
                 'message' => '',
                 'receiver_user_id' => $this->receiverUser->id
             ])
@@ -103,7 +103,7 @@ class CreateComplimentTest extends TestCase
     {
 
         $this->actingAs($this->user)
-            ->post('/api/compliments', [
+            ->post(route('compliments.create'), [
                 'message' => 'You are awesome!',
                 'receiver_user_id' => $this->user->id
             ])
@@ -118,7 +118,7 @@ class CreateComplimentTest extends TestCase
         $tagIds = $this->tags->pluck('id')->toArray();
 
         $this->actingAs($this->user)
-            ->post('/api/compliments', [
+            ->post(route('compliments.create'), [
                 'message' => 'You are awesome!',
                 'receiver_user_id' => $this->receiverUser->id,
                 'tags' => $tagIds
