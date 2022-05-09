@@ -2,8 +2,6 @@
 
 use App\Models\Compliment;
 use App\Models\User;
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class ListAllComplimentsTest extends TestCase
 {
