@@ -47,8 +47,8 @@
             "vendor/bin/phpunit-watcher watch"
         ],
         "migrate:testing": [
-            "rm -f database/database.sqlite",
-            "touch database/database.sqlite",
+            "@php -r \"@unlink(__DIR__.'/database/database.sqlite');\"",
+            "@php -r \"touch(__DIR__.'/database/database.sqlite');\"",
             "DB_CONNECTION=\"sqlite\" DB_DATABASE=\"database/database.sqlite\" php artisan migrate"
         ]
     }
