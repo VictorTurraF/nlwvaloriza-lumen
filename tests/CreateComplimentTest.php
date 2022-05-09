@@ -2,9 +2,23 @@
 
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class CreateComplimentTest extends TestCase
 {
+    private User $user;
+    private User $receiverUser;
+    private Collection $tags;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->receiverUser = User::factory()->create();
+        $this->tags = Tag::factory()->count(2)->create();
+    }
+
     /**
      * A basic test example.
      *
@@ -21,14 +35,11 @@ class CreateComplimentTest extends TestCase
 
     public function testShouldCreateACompliment()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
-        $receiverUser = User::factory()->create();
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/compliments', [
                 'message' => 'You are awesome!',
-                'receiver_user_id' => $receiverUser->id
+                'receiver_user_id' => $this->receiverUser->id
             ])
             ->seeStatusCode(201)
             ->seeJsonStructure([
@@ -42,10 +53,8 @@ class CreateComplimentTest extends TestCase
 
     public function testShouldReturnErrorIfReceiverUserIdIsNotValid()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/compliments', [
                 'message' => 'You are awesome!',
                 'receiver_user_id' => 'invalid'
@@ -60,12 +69,9 @@ class CreateComplimentTest extends TestCase
 
     public function testShouldReturnErrorIfReceiverUserIdIsNotExisting()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
-
         User::destroy(10);
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/compliments', [
                 'message' => 'You are awesome!',
                 'receiver_user_id' => 10
@@ -80,14 +86,10 @@ class CreateComplimentTest extends TestCase
 
     public function testShouldReturnErrorIfMessageIsEmpty()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
-        $receiverUser = User::factory()->create();
-
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/compliments', [
                 'message' => '',
-                'receiver_user_id' => $receiverUser->id
+                'receiver_user_id' => $this->receiverUser->id
             ])
             ->seeStatusCode(422)
             ->seeJson([
@@ -99,13 +101,11 @@ class CreateComplimentTest extends TestCase
 
     public function testShouldNotCreateIsSenderAndReceiverAreTheSame()
     {
-        /** @var User $user */
-        $user = User::factory()->create();
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/compliments', [
                 'message' => 'You are awesome!',
-                'receiver_user_id' => $user->id
+                'receiver_user_id' => $this->user->id
             ])
             ->seeStatusCode(400)
             ->seeJson([
@@ -114,15 +114,12 @@ class CreateComplimentTest extends TestCase
     }
 
     public function testShouldCanAttachManyTagsToACompliment() {
-        /** @var User $user */
-        $user = User::factory()->create();
-        $receiverUser = User::factory()->create();
-        $tagIds = Tag::factory()->count(2)->create()->pluck('id')->toArray();
+        $tagIds = $this->tags->pluck('id')->toArray();
 
-        $this->actingAs($user)
+        $this->actingAs($this->user)
             ->post('/api/compliments', [
                 'message' => 'You are awesome!',
-                'receiver_user_id' => $receiverUser->id,
+                'receiver_user_id' => $this->receiverUser->id,
                 'tags' => $tagIds
             ])
             ->seeStatusCode(201)
