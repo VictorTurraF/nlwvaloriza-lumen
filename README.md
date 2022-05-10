@@ -8,7 +8,7 @@ Implementação do projeto [NLW Valoriza](https://github.com/VictorTurraF/nlwval
 Primeiro um teste falhando de forma esperada, depois é escrita a funcionalidade para satizfazer os requisitos do teste. Resultando em uma melhor cobertura de testes e especificação/documentação completa da aplicação.
 
 ## Messagens de commit baseadas em Conventional e Atomic commits
-Messagens de commit baseadas em [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#specification) e também seguindo a filosofia dos commits atômicos onde cada commit contém um conjunto de alterações que representa uma funcionalidade da aplicação que foi testada e funciona corretamente, não sendo inserido nenhum commit no qual comprometa o funcionamento da aplicação naquele momento do histórico de versão.
+Messagens de commit baseadas em [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#specification) e também seguindo a filosofia dos commits atômicos onde cada commit contém um conjunto de alterações que representa uma funcionalidade da aplicação que foi testada e funciona corretamente, não sendo inserido nenhum commit no qual comprometa o funcionamento da aplicação em qualquer momento específico do histórico de versão.
 ![conventional_commits](https://user-images.githubusercontent.com/59932737/167523422-46beb679-ef11-404e-a82d-e38611a7859f.gif)
 
 ## Stateless Authentication
