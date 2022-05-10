@@ -12,7 +12,7 @@ Messagens de commit baseadas em [conventional commits](https://www.conventionalc
 ![conventional_commits](https://user-images.githubusercontent.com/59932737/167523422-46beb679-ef11-404e-a82d-e38611a7859f.gif)
 
 ## Stateless Authentication
-O metodo de autenticação utilizado foi *Stateless Authentication* utilizando JWT (*Json Web Token*) com o auxílio da biblioteca [jwt-auth](https://jwt-auth.readthedocs.io/en/develop/).
+O metodo de autenticação utilizado foi *Stateless Authentication* utilizando JWT (*Json Web Token*) por meio da biblioteca [jwt-auth](https://jwt-auth.readthedocs.io/en/develop/).
 ![auth](https://user-images.githubusercontent.com/59932737/167521079-1b6bd527-2910-4f9b-8cec-8bcf339bb821.gif)
 ![auth_request](https://user-images.githubusercontent.com/59932737/167521116-278c7701-5b0e-483e-9489-cedfc30cbc78.gif)
 
