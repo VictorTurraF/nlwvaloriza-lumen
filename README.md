@@ -12,6 +12,10 @@ Primeiro um teste falhando de forma esperada, depois é escrita a funcionalidade
 Utilização da biblioteca [spatie/phpunit-watcher](https://github.com/spatie/phpunit-watcher) para rodar os testes a cada alteração no código.
 ![nlw-lumen-test-watcher](https://user-images.githubusercontent.com/59932737/167953626-4ce52036-22a7-48df-9514-007173c9781e.gif)
 
+## Docker para desenvolvimento
+Imágem docker com Dockerfile e docker-compose para gerenciar todos os serviços.
+![nlw-lumen-docker](https://user-images.githubusercontent.com/59932737/167955264-20650401-8164-4733-8594-5097987b7ee4.gif)
+
 ## Messagens de commit baseadas em Conventional e Atomic commits
 Messagens de commit baseadas em [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#specification) e também seguindo a filosofia dos commits atômicos onde cada commit contém um conjunto de alterações que representa uma funcionalidade da aplicação que foi testada e funciona corretamente, não sendo inserido nenhum commit no qual comprometa o funcionamento da aplicação em qualquer momento específico do histórico de versão.
 ![conventional_commits](https://user-images.githubusercontent.com/59932737/167523422-46beb679-ef11-404e-a82d-e38611a7859f.gif)
