@@ -6,6 +6,11 @@ Implementação do projeto [NLW Valoriza](https://github.com/VictorTurraF/nlwval
 
 ## Test Driven Development
 Primeiro um teste falhando de forma esperada, depois é escrita a funcionalidade para satizfazer os requisitos do teste. Resultando em uma melhor cobertura de testes e especificação/documentação completa da aplicação.
+![nlw-lumen-tests](https://user-images.githubusercontent.com/59932737/167952786-097c9b6c-ee2e-4099-881a-4a44fc0ffde3.gif)
+
+### Test Whatching
+Utilização da biblioteca [spatie/phpunit-watcher](https://github.com/spatie/phpunit-watcher) para rodar os testes a cada alteração no código.
+![nlw-lumen-test-watcher](https://user-images.githubusercontent.com/59932737/167953626-4ce52036-22a7-48df-9514-007173c9781e.gif)
 
 ## Messagens de commit baseadas em Conventional e Atomic commits
 Messagens de commit baseadas em [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#specification) e também seguindo a filosofia dos commits atômicos onde cada commit contém um conjunto de alterações que representa uma funcionalidade da aplicação que foi testada e funciona corretamente, não sendo inserido nenhum commit no qual comprometa o funcionamento da aplicação em qualquer momento específico do histórico de versão.
